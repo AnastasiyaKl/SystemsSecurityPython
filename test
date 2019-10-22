@@ -1,0 +1,22 @@
+import os
+import json
+
+with open("users.json", "r") as file:
+    username = "usr"
+    passwd = "ur"
+    data = json.load(file)
+    file.close()
+    if data.get(username, None):
+        password = data[username].get("password", None)
+        if password == passwd:
+            print('success')  # success
+        else:
+            print('wrong password')  # wrong password
+    else:
+        print('no users')  # no user with this username
+
+# with open("users.json", "w") as file:
+#     username = "user"
+#     data[username] = dict(password = "user")
+#     json.dump(data, file)
+# file.close()
