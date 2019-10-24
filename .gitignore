@@ -1,3 +1,8 @@
 .idea/
 lib/
 lib64/
+
+__pycache__/
+*.python-36.pyc
+
+/auth/__pycache__

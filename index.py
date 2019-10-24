@@ -1,6 +1,7 @@
 import tkinter as tk
 from auth.registration import register
 from auth.authentication import login
+from start_permission import start_permission
 
 
 def about():
@@ -33,4 +34,17 @@ def main_screen():
     root.mainloop()
 
 
-main_screen()
+if(start_permission()):
+    main_screen()
+else:
+    global denied_permission_screen
+    denied_permission_screen = tk.Tk()
+    denied_permission_screen.title("Denied access")
+    denied_permission_screen.geometry("400x350")
+    denied_permission_screen.resizable(False, False)
+
+    tk.Label(denied_permission_screen, text="").pack()
+    tk.Label(denied_permission_screen, text="Sorry, but your keys are damaged(").pack()
+
+    denied_permission_screen.mainloop()
+
