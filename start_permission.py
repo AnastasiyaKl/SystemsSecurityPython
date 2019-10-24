@@ -62,10 +62,7 @@ def sys_inf():
     hwnd = user32.GetForegroundWindow()
     threadID = user32.GetWindowThreadProcessId(hwnd, None)
     StartLang = user32.GetKeyboardLayout(threadID)
-    if ( StartLang == 67699721):
-        lang = " ENG "
-    elif ( StartLang == 67568647):
-        lang = " DEU "
+    if ( StartLang == 67699721):lang = " DEU "
     elif (StartLang == -257424350):
         lang = " UKR "
     elif (StartLang == 68748313):
