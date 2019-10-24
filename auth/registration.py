@@ -2,26 +2,63 @@ import tkinter as tk
 import json
 
 
+# here rule for password
+def validate_password(password):
+    if len(password) >= 8:
+        return True
+    else:
+        return False
+
+
 def add_new_user(username, passwd):
     with open("users.json", "r") as file:
         data = json.load(file)
     file.close()
 
+    if username == "admin":
+        user_type = "admin"
+    else:
+        user_type = "user"
+
+
     with open("users.json", "w") as file:
-        data[username] = dict(password=passwd, blocked=False, type="user")
+        data[username] = dict(password=passwd, blocked="False", type=user_type)
         json.dump(data, file)
     file.close()
+
+
+def back_to_main():
+    registration_success_screen.destroy()
+    register_screen.destroy()
+
+
+def registration_success():
+    global registration_success_screen
+    registration_success_screen = tk.Toplevel()
+    registration_success_screen.title("Success!")
+    registration_success_screen.geometry("300x200")
+
+    tk.Label(registration_success_screen, text="").pack()
+    tk.Label(registration_success_screen, text="You successfully registered in system!", fg="green").pack()
+    tk.Label(registration_success_screen, text="").pack()
+    tk.Button(registration_success_screen, text="OK", command=back_to_main).pack()
 
 
 def register_user():
     username_info = username_input.get()
     password_info = password_input.get()
 
-    add_new_user(username_info, password_info)
+    if validate_password(password_info):
+        add_new_user(username_info, password_info)
 
-    username_input.delete(0, tk.END)
-    password_input.delete(0, tk.END)
-    tk.Label(register_screen, text="Registration Successful", fg="green").pack()
+        username_input.delete(0, tk.END)
+        password_input.delete(0, tk.END)
+
+        registration_success()
+
+    else:
+        password_input.delete(0, tk.END)
+        tk.Label(register_screen, text='Password should consists at least of 8 characters!', fg="red").pack()
 
 
 def register():
@@ -46,4 +83,5 @@ def register():
     password_input = tk.Entry(register_screen, textvariable=password)
     password_input.pack()
 
+    tk.Label(register_screen, text="").pack()
     tk.Button(register_screen, text="Register", width=10, height=1, command=register_user).pack()
