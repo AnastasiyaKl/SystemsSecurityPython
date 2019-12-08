@@ -1,1 +1,1 @@
-{"admin": {"password": "admin", "blocked": "False", "type": "admin"}, "user": {"password": "useruser", "blocked": "False", "type": "user"}, "user2": {"password": "12345678", "blocked": "True", "type": "user"}}
+{"admin": {"password": "admin", "blocked": "False", "type": "admin"}, "user": {"password": "useruser", "blocked": "True", "type": "user"}, "user2": {"password": "12345678", "blocked": "False", "type": "user"}}

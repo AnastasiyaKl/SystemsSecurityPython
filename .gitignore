@@ -6,3 +6,6 @@ __pycache__/
 *.python-36.pyc
 
 /auth/__pycache__
+
+build/
+dist/

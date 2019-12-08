@@ -18,9 +18,9 @@ def about():
 
     tk.Label(about_screen, text="").pack()
     tk.Label(about_screen, text="Done by").pack()
-    tk.Label(about_screen, text="Anastasiya Kovalenko, group IS-63").pack()
-    tk.Label(about_screen, text="Katerina Avramenko, group IS-63").pack()
-    tk.Label(about_screen, text="Variant #8").pack()
+    tk.Label(about_screen, text="Mudraya Anastasiya, group IS-61").pack()
+    tk.Label(about_screen, text="Khodarchenko Andrey, group IS-61").pack()
+    tk.Label(about_screen, text="Variant #11").pack()
 
 def main_screen():
     global root
@@ -295,7 +295,17 @@ def welcome_admin(username):
 
 # here rule for password
 def validate_password(password):
-    if len(password) >= 8:
+    digits = 0
+    letters = 0
+    signs = 0
+    for char in password:
+        if char.isdigit():
+            digits += 1
+        if char.isalpha():
+            letters += 1
+        if char == '+' or char == '-' or char == '*' or char == '/':
+            signs += 1
+    if digits > 0 and letters > 0 and signs > 0:
         return True
     else:
         return False
@@ -349,14 +359,14 @@ def register_user():
 
     else:
         password_input.delete(0, tk.END)
-        tk.Label(register_screen, text='Password should consists at least of 8 characters!', fg="red").pack()
+        tk.Label(register_screen, text='Password should consists at least one letter, one digit and one sign of arithmetic operation!', fg="red").pack()
 
 
 def register():
     global register_screen
     register_screen = tk.Toplevel()
     register_screen.title("Registration")
-    register_screen.geometry("400x300")
+    register_screen.geometry("600x300")
 
     global username_input
     global password_input
