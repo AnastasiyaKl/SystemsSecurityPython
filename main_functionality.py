@@ -5,7 +5,7 @@ from auth.registration import add_new_user
 
 
 def compare_passwords(entered, username):
-    with open("users.json", "r") as file:
+    with open("data/users11.json", "r") as file:
         data = json.load(file)
         file.close()
         password = data[username].get("password", None)
@@ -99,6 +99,7 @@ def welcome_user(user):
 # ################################################################################
 
 def back_to_main_admin():
+    save_admin_passphrase_success_screen.destroy()
     save_admin_password_success_screen.destroy()
     change_admin_password_screen.destroy()
 
@@ -172,6 +173,42 @@ def change_admin_password():
     tk.Label(change_admin_password_screen, text="").pack()
     tk.Button(change_admin_password_screen, text="Change password", command=admin_change_password).pack()
 
+def save_admin_passphrase_success():
+    global save_admin_passphrase_success_screen
+    save_admin_passphrase_success_screen = tk.Toplevel()
+    save_admin_passphrase_success_screen.title("Success!")
+    save_admin_passphrase_success_screen.geometry("300x200")
+
+    tk.Label(save_admin_passphrase_success_screen, text="").pack()
+    tk.Label(save_admin_passphrase_success_screen, text="You successfully changed you passphrase!", fg="green").pack()
+    tk.Label(save_admin_passphrase_success_screen, text="").pack()
+    tk.Button(save_admin_passphrase_success_screen, text="OK", command=back_to_main_admin).pack()
+
+
+
+def save_new_admin_passphrase():
+    global passphrase
+    passphrase = new_passphrase_input.get()
+    save_admin_passphrase_success()
+
+def change_passphrase():
+    global change_passphrase_screen
+    global change_passphrase_input
+
+    change_passphrase_screen = tk.Toplevel()
+    change_passphrase_screen.title("Change passphrase")
+    change_passphrase_screen.geometry("400x300")
+
+    tk.Label(change_passphrase_screen, text="").pack()
+    tk.Label(change_passphrase_screen, text="Enter new passphrase:").pack()
+
+    new_passphrase = tk.Text()
+    global new_passphrase_input
+    new_passphrase_input = tk.Entry(change_passphrase_screen, textvariable=new_passphrase)
+    new_passphrase_input.pack()
+    tk.Label(change_passphrase_screen, text="").pack()
+    tk.Button(change_passphrase_screen, text="Change passphrase", command=save_new_admin_passphrase).pack()
+
 # ###############################################################
 
 
@@ -200,7 +237,7 @@ def work_with_users():
 
     obj_blocked = {}
 
-    with open("users.json", "r") as file:
+    with open("data/json", "r") as file:
         data = json.load(file)
         file.close()
 
@@ -222,7 +259,7 @@ def work_with_users():
             tk.Label(work_with_users_screen, text="==============================").pack()
 
         def func():
-            with open("users.json", "w") as file:
+            with open("data/users11.json", "w") as file:
                 new_data = {}
                 for attr in data:
                     blocked = str(obj_blocked[attr].get())
@@ -255,5 +292,6 @@ def welcome_admin(username):
     tk.Label(welcome_admin_screen, text="").pack()
     tk.Button(welcome_admin_screen, text="Change password", command=change_admin_password).pack()
     tk.Label(welcome_admin_screen, text="").pack()
-
     tk.Button(welcome_admin_screen, text="Work with users", command=work_with_users).pack()
+    tk.Label(welcome_admin_screen, text="").pack()
+    tk.Button(welcome_admin_screen, text="Change passphrase", command=change_passphrase).pack()

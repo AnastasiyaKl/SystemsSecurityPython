@@ -4,7 +4,7 @@ from main_functionality import welcome_user, welcome_admin
 
 
 def check_user(username, passwd):
-    with open("users.json", "r") as file:
+    with open("data/users11.json", "r") as file:
         data = json.load(file)
         file.close()
         if data.get(username, None):

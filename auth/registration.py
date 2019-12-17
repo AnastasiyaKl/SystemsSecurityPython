@@ -11,7 +11,7 @@ def validate_password(password):
 
 
 def add_new_user(username, passwd):
-    with open("users.json", "r") as file:
+    with open("data/users11.json", "r") as file:
         data = json.load(file)
     file.close()
 
@@ -21,7 +21,7 @@ def add_new_user(username, passwd):
         user_type = "user"
 
 
-    with open("users.json", "w") as file:
+    with open("data/users11.json", "w") as file:
         data[username] = dict(password=passwd, blocked="False", type=user_type)
         json.dump(data, file)
     file.close()

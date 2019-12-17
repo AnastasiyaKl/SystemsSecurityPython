@@ -2,7 +2,14 @@ import tkinter as tk
 from auth.registration import register
 from auth.authentication import login
 from start_permission import start_permission
+from user_data_cipher import decipher
+from user_data_cipher import encipher
 
+
+def myf():
+  # print('closing main window...')
+  encipher()
+  root.destroy()
 
 def about():
     global about_screen
@@ -19,6 +26,7 @@ def about():
 def main_screen():
     global root
     root = tk.Tk()
+    root.protocol('WM_DELETE_WINDOW', myf)
     root.geometry("400x300")
     root.resizable(False, False)
     root.title("Lab 1")
@@ -31,6 +39,8 @@ def main_screen():
     tk.Label(text="").pack()
     tk.Button(root, text="About", height="2", width="30", command=about).pack()
 
+    # encipher()
+    decipher()
     root.mainloop()
 
 

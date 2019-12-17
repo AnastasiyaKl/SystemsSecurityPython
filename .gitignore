@@ -9,3 +9,11 @@ __pycache__/
 
 build/
 dist/
+venv/
+venv
+
+privatekey.txt
+publickey.txt
+rsa
+rsa_pub
+signature

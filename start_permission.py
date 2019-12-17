@@ -8,28 +8,39 @@ from ctypes import *
 user32 = windll.user32
 
 def start_permission():
-    if (os.path.exists("C:/Users/Public/BIS_KEYS/rsa") == False and os.path.exists("C:/Users/Public/BIS_KEYS/rsa_pub") == False and os.path.exists("C:/Users/Public/BIS_KEYS/signature") == False):
+    if (os.path.exists("rsa") == False and os.path.exists("rsa_pub") == False and os.path.exists("signature") == False):
         keyPair = RSA.generate(bits=1024)
 
-        f = open("C:/Users/Public/BIS_KEYS/rsa_pub","w+")
+        f = open("rsa_pub","w+")
         f.write(str(keyPair.n) + " " + str(keyPair.e))
         f.close()
 
-        f = open("C:/Users/Public/BIS_KEYS/rsa","w+")
+        f = open("rsa","w+")
         f.write(str(keyPair.n) + " " + str(keyPair.d))
         f.close()
 
-        f = open("C:/Users/Public/BIS_KEYS/signature","w+")
+        f = open("signature","w+")
         msg = str(sys_inf()).encode('utf-8')
         hash = int.from_bytes(sha512(msg).digest(), byteorder='big')
         signature = pow(hash, keyPair.d, keyPair.n)
         f.write(str(signature))
         f.close()
+
+        # key generation
+        privatekey = RSA.generate(2048)
+        f = open('privatekey.txt', 'wb')
+        f.write(bytes(privatekey.exportKey('PEM')))
+        f.close()
+        publickey = privatekey.publickey()
+        f = open('publickey.txt', 'wb')
+        f.write(bytes(publickey.exportKey('PEM')))
+        f.close()
+
         return True
-    elif(os.path.exists("C:/Users/Public/BIS_KEYS/rsa") == False or os.path.exists("C:/Users/Public/BIS_KEYS/rsa_pub") == False or os.path.exists("C:/Users/Public/BIS_KEYS/signature") == False):
+    elif(os.path.exists("rsa") == False or os.path.exists("rsa_pub") == False or os.path.exists("signature") == False):
         return False
     else:
-        f = open("C:/Users/Public/BIS_KEYS/rsa_pub","r")
+        f = open("rsa_pub","r")
         contentsPub = f.read()
         arContentsPub = contentsPub.split(" ")
         try:
@@ -39,7 +50,7 @@ def start_permission():
             return False
         f.close()
 
-        f = open("C:/Users/Public/BIS_KEYS/signature","r")
+        f = open("signature","r")
         contentsSign = f.read()
         try:
             contentsSign = int(contentsSign)
